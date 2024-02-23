@@ -49,11 +49,6 @@ setup()
 create_snake()
 move_snake()
 
-
-
-
-
-
 # print("\n")
 # print(snake_body)
 # for snake in snake_body:
