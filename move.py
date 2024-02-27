@@ -1,14 +1,18 @@
 def move_forwards(snake):
-    snake.forward(10)
+    for segment in snake:
+        segment.forward(90)
 
 def move_backwards(snake):
-    snake.backward(10)
+    for segment in snake:
+        segment.backward(90)
 
 def turn_left(snake):
-    snake.left(10)
+    for segment in snake:
+        segment.left(90)
 
 def turn_right(snake):
-    snake.right(10)
+    for segment in snake:
+        segment.right(90)
 
 def clear(snake):
     snake.clear()
