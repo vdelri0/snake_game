@@ -11,7 +11,9 @@
 - Detect collision with tail (The game should end)
 """
 from snake import Snake
-from turtle import Screen, Turtle
+from food import Food
+from scoreboard import Scoreboard
+from turtle import Screen
 
 import time
 
@@ -22,6 +24,8 @@ SLEEP = 0.1 # How fast the snake is going to move
 class main():
     def __init__(self):
         self.snake = Snake()
+        self.food = Food()
+        self.scoreboard = Scoreboard()
         self.screen = Screen()
         self.screen.title("Snake Game")
         self.screen.setup(width=600, height=600)
@@ -37,13 +41,28 @@ class main():
             self.screen.update()
             time.sleep(SLEEP)
             self.snake.move()
-            self.snake
+
+            # Detect collision with food
+            if self.snake.head.distance(self.food) < 15:
+                self.food.refresh()
+                self.snake.extend()
+                self.scoreboard.increase_score()
+
+            # Detect collision with wall
+            if self.snake.head.xcor() > 280 or self.snake.head.xcor() < -280 or self.snake.head.ycor() > 280 or self.snake.head.ycor() < -280:
+                self.game_over()
+
+            # Detect collision with tail
+            for segment in self.snake.snake[1:]:
+                if self.snake.head.distance(segment) < 10:
+                    self.game_over()
+
         self.screen.exitonclick()
+
+    def game_over(self):
+        global ON
+        ON = False
+        self.scoreboard.game_over()
 
 if __name__ == '__main__':
     main = main()
-
-# print("\n")
-# print(snake_body)
-# for snake in snake_body:
-#     print(snake.xcor(), snake.ycor())
